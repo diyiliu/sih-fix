@@ -45,22 +45,24 @@ public class SpringInitializer implements ApplicationListener {
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
+        // 时间范围 [2019-01-25, 2019-02-26)
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(0);
         calendar.set(Calendar.YEAR, 2019);
         calendar.set(Calendar.MONTH, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, 26);
+        calendar.set(Calendar.DAY_OF_MONTH, 25);
 
         // 开始时间
         Date start = calendar.getTime();
         //System.out.println(DateUtil.dateToString(start));
 
-        calendar.add(Calendar.DAY_OF_MONTH, 3);
+        calendar.add(Calendar.DAY_OF_MONTH, 28);
         // 结束时间
         Date end = calendar.getTime();
         //System.out.println(DateUtil.dateToString(end));
 
-        String sql = "SELECT  " +
+        String sql =
+                "SELECT  " +
                 "  t.`id`, " +
                 "  t.`vhcle`, " +
                 "  t.`action_date`, " +
@@ -69,16 +71,14 @@ public class SpringInitializer implements ApplicationListener {
                 "FROM " +
                 "  t_delivery_history t  " +
                 "WHERE t.`action_date` BETWEEN ? AND ? " +
-                "  AND t.`vehicle_location` IS NULL";
+                "  AND t.`vehicle_location` IS NULL " +
+                "ORDER BY t.`action_date`";
 
         List list = jdbcTemplate.queryForList(sql, new Object[]{start, end});
-        log.info("需要修复数据总数: [{}]", list.size());
+        log.info("=================== 运输扫描修复数据总数: [{}] ===================", list.size());
 
+        int count = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (i > 3) {
-                break;
-            }
-
             Map data = (Map) list.get(i);
             int id = (int) data.get("id");
             String vhcle = (String) data.get("vhcle");
@@ -92,7 +92,12 @@ public class SpringInitializer implements ApplicationListener {
             }
 
             try {
-                Position position = hbaseUtil.fetchPosition(vhcle, date.getTime());
+                long eTime = date.getTime();
+                long sTime = date.getTime() - 24 * 3600 * 1000;
+
+                Position position = hbaseUtil.fetchPosition(vhcle, sTime, eTime);
+                log.info("查询 [{}, {}] HBase 位置数据: {}", vhcle, DateUtil.dateToString(date), JacksonUtil.toJson(position));
+
                 if (position != null) {
                     Double distance = null;
                     if (lng != null && lat != null) {
@@ -105,15 +110,26 @@ public class SpringInitializer implements ApplicationListener {
                     position.setCity(posMap.get("city"));
                     position.setArea(posMap.get("area"));
 
-                    log.info("查询 [{}, {}] HBase 位置数据: {}", vhcle, DateUtil.dateToString(date), JacksonUtil.toJson(position));
+                    // 更新数据库
                     updateDb(id, distance, position);
+                    count++;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        log.info("=================== 运输扫描修复位置数据完成, 数量[{}] ===================", count);
     }
 
+
+
+
+    /**
+     * 更新数据库
+     * @param id
+     * @param distance
+     * @param position
+     */
     public void updateDb(int id, Double distance, Position position) {
         String sql = "  UPDATE  " +
                 "    t_delivery_history t  " +
@@ -130,6 +146,8 @@ public class SpringInitializer implements ApplicationListener {
         Object[] param = new Object[]{position.getEnLng(), position.getEnLat(), position.getAddress(),
                 position.getProvince(), position.getCity(), position.getArea(), distance, id};
         log.info("执行 SQL: {}, 参数: {}", sql, param);
+
+        jdbcTemplate.update(sql, param);
     }
 
     /**

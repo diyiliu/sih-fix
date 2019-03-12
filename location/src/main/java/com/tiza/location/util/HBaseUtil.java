@@ -1,18 +1,11 @@
 package com.tiza.location.util;
 
 import com.tiza.plugin.model.Position;
-import com.tiza.plugin.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.hbase.filter.BinaryComparator;
-import org.apache.hadoop.hbase.filter.CompareFilter;
-import org.apache.hadoop.hbase.filter.Filter;
-import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.util.Bytes;
-
-import java.util.Date;
 
 /**
  * Description: HBaseUtil
@@ -26,10 +19,11 @@ public class HBaseUtil {
     private Configuration config;
     private String tableName;
 
-    public Position fetchPosition(String id, long time) throws Exception {
+    public Position fetchPosition(String id, long sTime, long eTime) throws Exception {
         //log.info("查询 HBase 参数: [{}, {}]", id, DateUtil.dateToString(new Date(time)));
 
-        byte[] startRow = build(id, time);
+        byte[] startRow = build(id, eTime);
+        byte[] endRow = build(id, sTime);
         byte[] colBytes = Bytes.toBytes(0x200);
 
         Position position = null;
@@ -37,11 +31,8 @@ public class HBaseUtil {
             Table table = connection.getTable(TableName.valueOf(tableName));
 
             byte[] family = Bytes.toBytes(CF_DEFAULT);
-            Scan scan = new Scan(startRow);
+            Scan scan = new Scan(startRow, endRow);
             scan.addColumn(family, colBytes);
-
-            Filter filter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(startRow));
-            scan.setFilter(filter);
 
             try (ResultScanner rs = table.getScanner(scan)) {
                 for (Result r = rs.next(); r != null; r = rs.next()) {
