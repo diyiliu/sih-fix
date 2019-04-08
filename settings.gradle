@@ -1,4 +1,5 @@
 rootProject.name = 'sih-fix'
 includeFlat 'tiza-plugin'
 include 'location'
+include 'report-temp'
 
