@@ -1,6 +1,8 @@
 package com.tiza.tstar.op.sih_heatmap;
 
 import com.tiza.tstar.op.util.DBUtil;
+import com.tiza.tstar.op.util.HttpUtil;
+import com.tiza.tstar.op.util.JacksonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
@@ -12,7 +14,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description: WorkMapper
@@ -37,10 +41,11 @@ public class WorkMapper extends Mapper<LongWritable, Text, WorkKey, WorkValue> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        if (count > 2000) {
+        if (count > 500) {
 
             return;
         }
+
         String str = value.toString();
         if (str != null && str.length() > 0) {
             // 分割单行数据
@@ -51,28 +56,57 @@ public class WorkMapper extends Mapper<LongWritable, Text, WorkKey, WorkValue> {
 
             String vehicle = arr[1];
             if (vehicles.contains(vehicle)) {
-                Integer location = getInt(arr[7]);
+                String location = arr[7];
                 String enLng = arr[12];
                 String enLat = arr[13];
-                Integer gpsSpeed = getInt(arr[20]);
-
-                if (location == null || gpsSpeed == null ||
-                        location == 0 || gpsSpeed < 60 || gpsSpeed > 200) {
+                String gpsSpeed = arr[20];
+                if (StringUtils.isEmpty(location) || StringUtils.isEmpty(gpsSpeed) ||
+                        StringUtils.isEmpty(enLng) || StringUtils.isEmpty(enLat)) {
                     return;
                 }
-                if (StringUtils.isEmpty(enLng) || StringUtils.isEmpty(enLat)) {
-                    return;
+
+                int status = Integer.valueOf(location);
+                double speed = Double.valueOf(gpsSpeed);
+                if (status == 1 && speed > 60) {
+                    String ss = location + "," + gpsSpeed + "," + enLng + "," + enLat;
+
+                    System.out.println("vehicle:" + vehicle + "[" + ss + "]");
+                    count++;
+
+                    Map param = new HashMap();
+                    param.put("lng", enLng);
+                    param.put("lat", enLat);
+                    param.put("radius", 100);
+                    try {
+                        String json = HttpUtil.getForString("http://10.129.50.41:7001/road/regeocode", param);
+                        System.out.println(json);
+
+                        Map dataMap = JacksonUtil.toObject(json, HashMap.class);
+                        boolean expressway = (boolean) dataMap.get("expressway");
+                        if (expressway) {
+                            String geohash = (String) dataMap.get("geohash");
+                            String name = (String) dataMap.get("name");
+
+                            Map lnglat = (Map) dataMap.get("correctiveLocation");
+                            double lng = (double) lnglat.get("lng");
+                            double lat = (double) lnglat.get("lat");
+
+                            WorkKey workKey = new WorkKey();
+                            workKey.setGeohash(geohash);
+                            workKey.setLng(lng);
+                            workKey.setLat(lat);
+
+                            WorkValue workValue = new WorkValue();
+                            workValue.setName(StringUtils.isNotEmpty(name) ? name : vehicle);
+                            context.write(workKey, workValue);
+
+                            System.out.println("vehicle:" + vehicle + "[" + geohash + "," + name + "]");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
-                count++;
-                WorkKey workKey = new WorkKey();
-                workKey.setVehicle(vehicle);
-
-                WorkValue workValue = new WorkValue();
-                workValue.setName("vehicle:" + vehicle);
-
-                str = location + "," + gpsSpeed + "," + enLng + "," + enLat;
-                System.out.println("vehicle:" + vehicle + "[" + str + "]");
-                context.write(workKey, workValue);
             }
         }
     }
@@ -92,16 +126,5 @@ public class WorkMapper extends Mapper<LongWritable, Text, WorkKey, WorkValue> {
         }
 
         return list;
-    }
-
-    public static Integer getInt(String value) {
-        if (value == null) {
-            return null;
-        }
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return null;
-        }
     }
 }

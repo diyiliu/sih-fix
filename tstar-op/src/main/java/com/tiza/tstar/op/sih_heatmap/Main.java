@@ -1,6 +1,7 @@
 package com.tiza.tstar.op.sih_heatmap;
 
 import cn.com.tiza.tstar.op.client.BaseJob;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -27,6 +28,9 @@ public class Main extends BaseJob {
         job.setReducerClass(WorkReducer.class);
         job.setOutputFormatClass(NullOutputFormat.class);
         job.setNumReduceTasks(1);
+
+        Configuration conf = job.getConfiguration();
+        conf.set("jobTime", data_time);
 
         return job;
     }

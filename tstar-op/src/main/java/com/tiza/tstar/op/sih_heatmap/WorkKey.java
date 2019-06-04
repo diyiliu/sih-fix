@@ -14,31 +14,55 @@ import java.io.IOException;
  */
 public class WorkKey implements WritableComparable<WorkKey> {
 
-    private String vehicle;
+    private String geohash;
 
-    public String getVehicle() {
-        return vehicle;
+    private Double lng;
+
+    private Double lat;
+
+    public String getGeohash() {
+        return geohash;
     }
 
-    public void setVehicle(String vehicle) {
-        this.vehicle = vehicle;
+    public void setGeohash(String geohash) {
+        this.geohash = geohash;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 
     @Override
     public int compareTo(WorkKey o) {
-        return vehicle.compareTo(o.getVehicle());
+        return geohash.compareTo(o.getGeohash());
     }
 
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {
 
-        Text.writeString(dataOutput, vehicle);
+        Text.writeString(dataOutput, geohash);
+        dataOutput.writeDouble(lng);
+        dataOutput.writeDouble(lat);
     }
 
     @Override
     public void readFields(DataInput dataInput) throws IOException {
 
-        this.vehicle = Text.readString(dataInput);
+        this.geohash = Text.readString(dataInput);
+        this.lng = dataInput.readDouble();
+        this.lat = dataInput.readDouble();
     }
 }

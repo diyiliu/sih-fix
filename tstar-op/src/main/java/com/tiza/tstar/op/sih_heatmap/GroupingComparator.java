@@ -19,6 +19,6 @@ public class GroupingComparator extends WritableComparator {
         WorkKey key1 = (WorkKey)a;
         WorkKey key2 = (WorkKey)b;
 
-        return key1.getVehicle().compareTo(key2.getVehicle());
+        return key1.getGeohash().compareTo(key2.getGeohash());
     }
 }

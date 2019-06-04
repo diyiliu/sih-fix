@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.cloudera.htrace:htrace-core:2.04">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/cloudera/htrace/htrace-core/2.04/htrace-core-2.04.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/cloudera/htrace/htrace-core/2.04/htrace-core-2.04-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
