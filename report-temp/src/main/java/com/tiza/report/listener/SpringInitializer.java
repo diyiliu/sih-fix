@@ -2,6 +2,7 @@ package com.tiza.report.listener;
 
 import com.tiza.plugin.util.CommonUtil;
 import com.tiza.plugin.util.DateUtil;
+import com.tiza.plugin.util.JacksonUtil;
 import com.tiza.report.model.RecordData;
 import com.tiza.report.model.WorkValue;
 import com.tiza.report.util.HBaseUtil;
@@ -14,10 +15,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.io.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Description: SpringInitializer
@@ -46,7 +46,7 @@ public class SpringInitializer implements ApplicationListener {
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
-        String[] ids = vehicles.split(",");
+/*        String[] ids = vehicles.split(",");
         log.info("=================== 运输扫描修复数据总数: [{}] ===================", ids.length);
         String day = "2019-03-26";
         int count = 0;
@@ -54,7 +54,14 @@ public class SpringInitializer implements ApplicationListener {
             start(day, 7, id);
             count++;
         }
-        log.info("=================== 运输扫描修复位置数据完成, 数量[{}]。 ===================", count);
+        log.info("=================== 运输扫描修复位置数据完成, 数量[{}]。 ===================", count);*/
+
+        File file = new File("C:\\Users\\DIYILIU\\Desktop\\20150131.txt");
+        try {
+            readFile(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void start(String day, int count, String vehicle) {
@@ -82,6 +89,33 @@ public class SpringInitializer implements ApplicationListener {
         }
     }
 
+    private void readFile(File file) throws Exception {
+        List<WorkValue> list = new ArrayList();
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String text;
+        while ((text = reader.readLine()) != null) {
+            String arr[] = text.split("\t");
+            String vhcle = arr[1];
+            String gpsTime = arr[5];
+            String speed = arr[20];
+            String mileage = arr[22];
+            String fuelConsumption = arr[31];
+
+            WorkValue workValue = new WorkValue(vhcle, DateUtil.stringToDate(gpsTime).getTime(), speed, mileage, fuelConsumption);
+            list.add(workValue);
+        }
+
+        Map<String, List<WorkValue>> vehicleMap = list.stream().collect(Collectors.groupingBy(WorkValue::getVhcle));
+        vehicleMap.keySet().forEach(e -> {
+            log.info("车辆[{}]分析中 ... ", e);
+
+            List<WorkValue> workValues = vehicleMap.get(e);
+            // 按时间排序
+            Collections.sort(workValues);
+            handle(e, workValues);
+        });
+    }
+
 
     private void handle(String id, List<WorkValue> list) {
         long beforeGpsTime = 0;
@@ -106,12 +140,15 @@ public class SpringInitializer implements ApplicationListener {
             double fuelConsumption = Double.parseDouble(workValue.getFuelConsumption());
             if (mileage > 99999999) {
                 continue;
-            }else {
+            } else {
                 totalMileage = mileage;
             }
 
             // 总油耗 展示当天最大有效值
-            if (fuelConsumption > totalFuelConsumption) {
+            if (fuelConsumption > 99999999){
+                continue;
+            }
+            else if (fuelConsumption > totalFuelConsumption) {
                 totalFuelConsumption = fuelConsumption;
             }
 
@@ -172,11 +209,13 @@ public class SpringInitializer implements ApplicationListener {
     }
 
     private void dealDb(RecordData data) {
-        String sql = "INSERT INTO z_stat_vehicle_daily (`vhcle`, `date`, `day_fuel_consumption`,`day_mileage`,`total_fuel_consumption`,`total_mileage`,`lp100km`,`online_time`,`stop_time`)" +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO stat_vehicle_daily (`vhcle`, `date`, `day_fuel_consumption`,`day_mileage`,`total_fuel_consumption`,`total_mileage`,`lp100km`,`online_time`,`stop_time`,`create_date`)" +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Object[] params = new Object[]{data.getVhcle(), data.getDate(), data.getDayFuelConsumption(), data.getDayMileage(), data.getTotalFuelConsumption(), data.getTotalMileage(),
-                data.getLp100km(), data.getOnlineTime(), data.getStopTime()};
+                data.getLp100km(), data.getOnlineTime(), data.getStopTime(), new Date()};
+
+        log.info("插入数据[{}] ... ", JacksonUtil.toJson(data));
         jdbcTemplate.update(sql, params);
     }
 

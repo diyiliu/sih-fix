@@ -28,8 +28,8 @@ public class TestGaoDe {
         String key = "dba607b5151015663f8e6bce14e94fa8";
         String url = "http://restapi.amap.com/v3/geocode/regeo";
 
-        double lng = 111.067206;
-        double lat = 34.711284;
+        double lng = 117.3263454490;
+        double lat = 34.1905057809;
 
 //        double lng = 106.529108;
 //        double lat = 29.683097;
