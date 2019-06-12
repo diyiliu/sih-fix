@@ -18,15 +18,12 @@ dependencies {
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.2.5'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
-
+    compile group: 'ch.hsr', name: 'geohash', version: '1.3.0'
 
     compile group: 'org.apache.hbase', name: 'hbase-client', version: '0.98.12-hadoop2', transitive: false
     compile group: 'org.apache.hbase', name: 'hbase-common', version: '0.98.12-hadoop2', transitive: false
     compile group: 'org.apache.hbase', name: 'hbase-protocol', version: '0.98.12-hadoop2'
     compile group: 'org.cloudera.htrace', name: 'htrace-core', version: '2.04'
-
-
-
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

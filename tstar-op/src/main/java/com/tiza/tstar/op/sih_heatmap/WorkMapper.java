@@ -1,8 +1,8 @@
 package com.tiza.tstar.op.sih_heatmap;
 
+import ch.hsr.geohash.GeoHash;
+import ch.hsr.geohash.WGS84Point;
 import com.tiza.tstar.op.util.DBUtil;
-import com.tiza.tstar.op.util.HttpUtil;
-import com.tiza.tstar.op.util.JacksonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
@@ -14,9 +14,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Description: WorkMapper
@@ -27,8 +25,6 @@ public class WorkMapper extends Mapper<LongWritable, Text, WorkKey, WorkValue> {
     private final static String separator = "\t";
     private List<String> vehicles;
 
-    private int count = 1;
-
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
         Configuration conf = context.getConfiguration();
@@ -38,14 +34,8 @@ public class WorkMapper extends Mapper<LongWritable, Text, WorkKey, WorkValue> {
         System.out.println("高速公路热度分析, CQ4[" + vehicles.size() + "] ... ");
     }
 
-
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        if (count > 500) {
-
-            return;
-        }
-
         String str = value.toString();
         if (str != null && str.length() > 0) {
             // 分割单行数据
@@ -67,12 +57,16 @@ public class WorkMapper extends Mapper<LongWritable, Text, WorkKey, WorkValue> {
 
                 int status = Integer.valueOf(location);
                 double speed = Double.valueOf(gpsSpeed);
-                if (status == 1 && speed > 60) {
-                    String ss = location + "," + gpsSpeed + "," + enLng + "," + enLat;
+                if (status == 1 && speed > 75) {
+                    double lng = Double.valueOf(enLng);
+                    double lat = Double.valueOf(enLat);
+                    GeoHash geoHash = GeoHash.withCharacterPrecision(lat, lng, 8);
+                    String geoStr = geoHash.toBinaryString();
 
-                    System.out.println("vehicle:" + vehicle + "[" + ss + "]");
-                    count++;
-
+                    WGS84Point hashPoint = geoHash.getPoint();
+                    lng = hashPoint.getLongitude();
+                    lat = hashPoint.getLatitude();
+/*
                     Map param = new HashMap();
                     param.put("lng", enLng);
                     param.put("lat", enLat);
@@ -105,7 +99,15 @@ public class WorkMapper extends Mapper<LongWritable, Text, WorkKey, WorkValue> {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+*/
+                    WorkKey workKey = new WorkKey();
+                    workKey.setGeohash(geoStr);
+                    workKey.setLng(lng);
+                    workKey.setLat(lat);
 
+                    WorkValue workValue = new WorkValue();
+                    workValue.setName(geoStr);
+                    context.write(workKey, workValue);
                 }
             }
         }

@@ -35,7 +35,7 @@ public class WorkReducer extends Reducer<WorkKey, WorkValue, Text, NullWritable>
         org.apache.hadoop.conf.Configuration hconf = HBaseConfiguration.create();
         //配置参数，第一个是主机名，第二个是端口号
         hconf.set("hbase.zookeeper.quorum", "scsp00261.saicdt.com,scsp00262.saicdt.com,scsp00266.saicdt.com");
-        conn = HConnectionManager.createConnection(conf);
+        conn = HConnectionManager.createConnection(hconf);
     }
 
     @Override
