@@ -1,4 +1,5 @@
 import com.tiza.sih.rp.support.model.IDataProcess;
+import com.tiza.sih.rp.support.util.CommonUtil;
 import com.tiza.sih.rp.support.util.DataProcessUtil;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class TestParse {
 
     @Test
     public void test2(){
-
-
+        byte[] b = new byte[]{7, 9};
+        System.out.println(CommonUtil.bytes2BinaryStr(b));
     }
 }

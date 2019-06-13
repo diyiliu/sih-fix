@@ -1,14 +1,19 @@
 package com.tiza.sih.rp.support.protocol.cmd;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tiza.sih.rp.support.model.GbSixHeader;
 import com.tiza.sih.rp.support.model.Header;
 import com.tiza.sih.rp.support.protocol.GbSixDataProcess;
 import com.tiza.sih.rp.support.util.CommonUtil;
+import com.tiza.sih.rp.support.util.GpsCorrectUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description: CMD_02
@@ -43,8 +48,9 @@ public class CMD_02 extends GbSixDataProcess {
                 parseFlow(buf, list);
             }
         }
-    }
 
+        detach(sixHeader, list);
+    }
 
     private void parseOBD(ByteBuf buf, List paramValues) {
         int protocol = buf.readUnsignedByte();
@@ -71,99 +77,122 @@ public class CMD_02 extends GbSixDataProcess {
         // 待定
         byte[] iuprBytes = new byte[36];
         buf.readBytes(iuprBytes);
+        String iupr = new String(iuprBytes);
+
 
         // 故障信息
+        List faults = Lists.newArrayList();
         int faultNum = buf.readUnsignedByte();
         if (faultNum > 0 && faultNum != 0xFE) {
             for (int i = 0; i < faultNum; i++) {
                 int code = buf.readInt();
+                faults.add(code);
             }
+        }
+
+        Map map = Maps.newHashMap();
+        paramValues.add(map);
+        map.put("vin", vin);
+        map.put("obd_protocol", protocol);
+        map.put("mil", mil);
+        map.put("support_status", CommonUtil.bytes2BinaryStr(supStatus));
+        map.put("ready_status", CommonUtil.bytes2BinaryStr(readyStatus));
+        map.put("soft_id", soft);
+        map.put("cvn", cvn);
+        map.put("iupr", iupr);
+        if (CollectionUtils.isNotEmpty(faults)){
+            map.put("fault_info", faults);
         }
     }
 
     private void parseFlow(ByteBuf buf, List paramValues) {
+        Map map = Maps.newHashMap();
+        paramValues.add(map);
+
         int speed = buf.readUnsignedShort();
         if (0xFFFF != speed) {
-            CommonUtil.keepDecimal(speed, 1 / 256, 3);
+            map.put("speed", CommonUtil.keepDecimal(speed, 1 / 256, 3));
         }
 
         int pressure = buf.readUnsignedByte();
         if (0xFFFF != pressure) {
-            CommonUtil.keepDecimal(pressure, 0.5, 1);
+            map.put("air_pressure", CommonUtil.keepDecimal(pressure, 0.5, 1));
         }
 
         // 扭矩
         int torque = buf.readUnsignedByte();
         if (0xFF != torque) {
             torque = torque - 125;
+            map.put("torque", torque);
         }
 
         // 摩擦扭矩
         int frictionTq = buf.readUnsignedByte();
         if (0xFF != frictionTq) {
             frictionTq = frictionTq - 125;
+            map.put("friction_torque", frictionTq);
         }
 
         // 发动机转速
         int rpm = buf.readUnsignedShort();
         if (0xFFFF != rpm) {
-            CommonUtil.keepDecimal(rpm, 0.125, 3);
+            map.put("rpm", CommonUtil.keepDecimal(rpm, 0.125, 3));
         }
 
         // 燃料流量
         int ff = buf.readUnsignedShort();
         if (0xFFFF != ff) {
-            CommonUtil.keepDecimal(ff, 0.05, 2);
+            map.put("fuel_flow", CommonUtil.keepDecimal(ff, 0.05, 2));
         }
 
         int upNox = buf.readUnsignedShort();
         if (0xFFFF != ff) {
-            CommonUtil.keepDecimal(upNox, 0.05, 2);
+            map.put("up_nox", CommonUtil.keepDecimal(upNox, 0.05, 2));
         }
 
         int downNox = buf.readUnsignedShort();
         if (0xFFFF != ff) {
-            CommonUtil.keepDecimal(downNox, 0.05, 2);
+            map.put("down_nox", CommonUtil.keepDecimal(downNox, 0.05, 2));
         }
 
         // 反应剂余量
         int reactant = buf.readUnsignedByte();
         if (0xFF != reactant) {
-            CommonUtil.keepDecimal(reactant, 0.4, 1);
+            map.put("reactant_percent", CommonUtil.keepDecimal(reactant, 0.4, 1));
         }
 
         // 进气量
         int inflow = buf.readUnsignedShort();
         if (0xFFFF != inflow) {
-            CommonUtil.keepDecimal(inflow, 0.05, 2);
+            map.put("air_inflow", CommonUtil.keepDecimal(inflow, 0.05, 2));
         }
 
         int inTemp = buf.readUnsignedShort();
         if (0xFFFF != inTemp) {
-            double d = CommonUtil.keepDecimal(inTemp, 0.03125, 5) - 273;
+            map.put("in_temp", CommonUtil.keepDecimal(inTemp, 0.03125, 5) - 273);
         }
 
         int outTemp = buf.readUnsignedShort();
         if (0xFFFF != outTemp) {
-            double d = CommonUtil.keepDecimal(outTemp, 0.03125, 5) - 273;
+            map.put("out_temp", CommonUtil.keepDecimal(outTemp, 0.03125, 5) - 273);
         }
 
         // DFP 压差
         int dfpDif = buf.readUnsignedShort();
         if (0xFFFF != dfpDif) {
-            CommonUtil.keepDecimal(dfpDif, 0.1, 1);
+            map.put("dfp_dif", CommonUtil.keepDecimal(dfpDif, 0.1, 1));
         }
 
         // 冷却液温度
         int coolantTemp = buf.readUnsignedByte();
         if (0xFF != coolantTemp) {
-            int i = coolantTemp - 40;
+            map.put("coolant_temp", coolantTemp - 40);
         }
 
         // 油位
         int fuelLevel = buf.readUnsignedByte();
         if (0xFF != fuelLevel) {
-            CommonUtil.keepDecimal(fuelLevel, 0.4, 1);
+            map.put("fuel_level", CommonUtil.keepDecimal(fuelLevel, 0.4, 1));
         }
 
         // 定位状态
@@ -177,13 +206,19 @@ public class CMD_02 extends GbSixDataProcess {
         long lng = buf.readUnsignedInt();
         long lat = buf.readUnsignedInt();
 
-        CommonUtil.keepDecimal(lng * (lngDir == 0 ? 1 : -1), 0.000001, 6);
-        CommonUtil.keepDecimal(lat * (latDir == 0 ? 1 : -1), 0.000001, 6);
+        double lngD = CommonUtil.keepDecimal(lng * (lngDir == 0 ? 1 : -1), 0.000001, 6);
+        double latD = CommonUtil.keepDecimal(lat * (latDir == 0 ? 1 : -1), 0.000001, 6);
+
+        double[] latLng = GpsCorrectUtil.transform(latD, lngD);
+        map.put("location", status);
+        map.put("lng", lngD);
+        map.put("lat", latD);
+        map.put("enlng", latLng[1]);
+        map.put("enlat", latLng[0]);
 
         long mileage = buf.readUnsignedInt();
         if (0xFFFFFFFF != mileage) {
-            CommonUtil.keepDecimal(mileage, 0.1, 1);
+            map.put("mileage", CommonUtil.keepDecimal(mileage, 0.1, 1));
         }
-
     }
 }

@@ -17,9 +17,7 @@ import java.util.Map;
  * Description: GpsCorrectUtil
  * Author: DIYILIU
  * Update: 2016-04-14 14:35
- * <p>
  * 适用于google,高德体系的地图
- * <p>
  * 火星坐标系 (GCJ-02) 与百度坐标系 (BD-09) 的互转
  */
 public class GpsCorrectUtil {

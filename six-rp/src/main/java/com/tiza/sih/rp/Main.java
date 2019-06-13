@@ -7,7 +7,9 @@ import backtype.storm.spout.SchemeAsMultiScheme;
 import backtype.storm.topology.TopologyBuilder;
 import com.tiza.sih.rp.module.ParseHandler;
 import com.tiza.sih.rp.support.util.JacksonUtil;
+import com.tiza.sih.rp.support.util.SpringUtil;
 import org.apache.commons.cli.*;
+import org.springframework.jdbc.core.JdbcTemplate;
 import storm.kafka.KafkaSpout;
 import storm.kafka.SpoutConfig;
 import storm.kafka.StringScheme;
@@ -34,7 +36,7 @@ public class Main {
         CommandLine cli = parser.parse(options, args);
 
         Properties properties = new Properties();
-        try (InputStream in = ClassLoader.getSystemResourceAsStream("obd.properties")) {
+        try (InputStream in = ClassLoader.getSystemResourceAsStream("sih.properties")) {
             properties.load(in);
             String topic = properties.getProperty("kafka.topic");
             ZkHosts zkHosts = new ZkHosts(properties.getProperty("kafka.zk-host"));

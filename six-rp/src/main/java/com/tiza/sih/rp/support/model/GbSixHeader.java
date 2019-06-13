@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class GbSixHeader extends Header{
-
+    private String vehicle;
     private int cmd;
     private int version;
     private int encrypt;

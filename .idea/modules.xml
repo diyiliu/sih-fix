@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/location/com.tiza.location.iml" filepath="$PROJECT_DIR$/.idea/modules/location/com.tiza.location.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/location/com.tiza.location.main.iml" filepath="$PROJECT_DIR$/.idea/modules/location/com.tiza.location.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/location/com.tiza.location.test.iml" filepath="$PROJECT_DIR$/.idea/modules/location/com.tiza.location.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.iml" filepath="$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.main.iml" filepath="$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.test.iml" filepath="$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/six-rp/com.tiza.six-rp.iml" filepath="$PROJECT_DIR$/.idea/modules/six-rp/com.tiza.six-rp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/six-rp/com.tiza.six-rp.main.iml" filepath="$PROJECT_DIR$/.idea/modules/six-rp/com.tiza.six-rp.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/six-rp/com.tiza.six-rp.test.iml" filepath="$PROJECT_DIR$/.idea/modules/six-rp/com.tiza.six-rp.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tstar-op/com.tiza.tstar-op.iml" filepath="$PROJECT_DIR$/.idea/modules/tstar-op/com.tiza.tstar-op.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tstar-op/com.tiza.tstar-op.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tstar-op/com.tiza.tstar-op.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tstar-op/com.tiza.tstar-op.test.iml" filepath="$PROJECT_DIR$/.idea/modules/tstar-op/com.tiza.tstar-op.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sih-fix.iml" filepath="$PROJECT_DIR$/sih-fix.iml" />
+    </modules>
+  </component>
+</project>

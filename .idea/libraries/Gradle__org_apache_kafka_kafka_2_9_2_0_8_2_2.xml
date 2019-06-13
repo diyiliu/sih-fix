@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.kafka:kafka_2.9.2:0.8.2.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/caches/modules-2/files-2.1/org.apache.kafka/kafka_2.9.2/0.8.2.2/47ea36e4efe93dd805bf4570f82075160943690b/kafka_2.9.2-0.8.2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/caches/modules-2/files-2.1/org.apache.kafka/kafka_2.9.2/0.8.2.2/dbc1a31c0954ececf334bc24237ec1f4235ecc61/kafka_2.9.2-0.8.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

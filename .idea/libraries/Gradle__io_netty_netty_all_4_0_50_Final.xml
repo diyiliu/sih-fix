@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: io.netty:netty-all:4.0.50.Final">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/caches/modules-2/files-2.1/io.netty/netty-all/4.0.50.Final/1dca36288bc4dea3d8e29844a0544f91ca788553/netty-all-4.0.50.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/caches/modules-2/files-2.1/io.netty/netty-all/4.0.50.Final/e10497ac9c892f899fde98ced30ca24004cd5de0/netty-all-4.0.50.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

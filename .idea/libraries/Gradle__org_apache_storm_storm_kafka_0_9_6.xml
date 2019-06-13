@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.storm:storm-kafka:0.9.6">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/caches/modules-2/files-2.1/org.apache.storm/storm-kafka/0.9.6/ff73378a9ba656a8e757b241969800c3aaa28b66/storm-kafka-0.9.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/caches/modules-2/files-2.1/org.apache.storm/storm-kafka/0.9.6/9a5667d9dc6cb93860ef07b7ab6c70c6f7a2e475/storm-kafka-0.9.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

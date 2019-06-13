@@ -42,12 +42,14 @@ public class WorkReducer extends Reducer<WorkKey, WorkValue, Text, NullWritable>
     protected void reduce(WorkKey key, Iterable<WorkValue> values, Context context) throws IOException, InterruptedException {
         int count = 0;
         for (Iterator<WorkValue> iterator = values.iterator(); iterator.hasNext(); ) {
-            WorkValue v = iterator.next();
+            iterator.next();
             count++;
-            System.out.println(v.getName());
         }
-        System.out.println("高速热度分析结果: [GEOHASH: " + key.getGeohash() + ", 重复率: " + count + "]");
-        toHBase(key, count);
+
+        if (count > 2){
+            System.out.println("高速热度分析结果: [GEOHASH: " + key.getGeohash() + ", 重复率: " + count + "]");
+            toHBase(key, count);
+        }
     }
 
 

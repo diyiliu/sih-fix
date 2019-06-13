@@ -440,25 +440,6 @@ public class CommonUtil {
         return retVal;
     }
 
-    public static void main(String[] args) {
-
-
-        /**
-         byte[] array = new byte[]{0x03, 0x3D, 0x55, 0x7A, 0x39};
-         String sim = null;
-         sim = parseSIM(array);
-
-         System.out.println(sim);
-         array =  packSIM(sim);
-         sim = parseSIM(array);
-
-         System.out.println(sim);
-         */
-
-        System.out.println(keepDecimal(12.345, 0.01, 1));
-
-    }
-
     /**
      * 对象转数组
      *
@@ -604,5 +585,29 @@ public class CommonUtil {
         buf.readBytes(raw);
 
         return raw;
+    }
+
+    public static String bytes2BinaryStr(byte[] bytes) {
+        StringBuffer strBuf = new StringBuffer();
+        for (byte b : bytes) {
+            strBuf.append(byte2BinaryStr(b));
+        }
+        return strBuf.toString();
+    }
+
+    /**
+     * 字节转二进制字符串
+     *
+     * @param b
+     * @return
+     */
+    public static String byte2BinaryStr(byte b) {
+        StringBuffer strBuf = new StringBuffer();
+        for (int i = 0; i < 8; i++) {
+            int value = (b >> i) & 0x01;
+            strBuf.append(value);
+        }
+
+        return strBuf.toString();
     }
 }

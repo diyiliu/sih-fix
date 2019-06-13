@@ -1,6 +1,7 @@
 package com.tiza.location.util;
 
 import com.tiza.plugin.model.Position;
+import com.tiza.plugin.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.TableName;
@@ -47,7 +48,7 @@ public class HBaseUtil {
                             String gpsDate = dataArr[5];
 
                             position = new Position();
-                            position.setGpsDate(gpsDate);
+                            position.setTime(DateUtil.stringToDate(gpsDate).getTime());
                             position.setEnLng(enLng);
                             position.setEnLat(enLat);
 

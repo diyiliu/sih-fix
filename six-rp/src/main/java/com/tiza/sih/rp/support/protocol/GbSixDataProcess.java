@@ -1,12 +1,18 @@
 package com.tiza.sih.rp.support.protocol;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tiza.sih.rp.support.model.GbSixHeader;
 import com.tiza.sih.rp.support.model.Header;
 import com.tiza.sih.rp.support.model.IDataProcess;
 import com.tiza.sih.rp.support.util.CommonUtil;
+import com.tiza.sih.rp.support.util.JacksonUtil;
+import com.tiza.sih.rp.support.util.SpringUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import org.apache.commons.collections.MapUtils;
 import org.reflections.Reflections;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.*;
 
@@ -67,6 +73,39 @@ public class GbSixDataProcess implements IDataProcess {
         processBox.put(cmdId, this);
     }
 
+    public void detach(GbSixHeader header,List<Map> paramValues){
+        int cmd = header.getCmd();
+        String vehicle = header.getVehicle();
+
+        List list = Lists.newArrayList(vehicle, header.getGpsTime());
+        StringBuffer pStr = new StringBuffer();
+        StringBuffer vStr = new StringBuffer();
+        List keys = new ArrayList();
+        for (int i = 0; i < paramValues.size(); i++) {
+            Map map = paramValues.get(i);
+            for (Iterator iterator = map.keySet().iterator(); iterator.hasNext(); ) {
+                String key = (String) iterator.next();
+                Object value = map.get(key);
+                // 过滤重复字段
+                if (keys.contains(key)) {
+                    continue;
+                }
+                keys.add(key);
+
+                pStr.append(",").append(key);
+                vStr.append(",?");
+                list.add(formatValue(value));
+            }
+        }
+
+        String sql = "REPLACE INTO t_vehicle_info_gbsix(vhcle,update_time" + pStr + ") VALUES(?,?" + vStr +")";
+        // 更新当前位置信息
+        if (0x02 == cmd) {
+            JdbcTemplate jdbcTemplate = SpringUtil.getBean("jdbcTemplate");
+            jdbcTemplate.update(sql, list.toArray());
+        }
+    }
+
     /**
      * 解析协议中时间
      *
@@ -91,6 +130,15 @@ public class GbSixDataProcess implements IDataProcess {
             IDataProcess process = (IDataProcess) clz.newInstance();
             process.init();
         }
+    }
+
+    public Object formatValue(Object obj) {
+        if (obj instanceof Map || obj instanceof Collection) {
+
+            return JacksonUtil.toJson(obj);
+        }
+
+        return obj;
     }
 
     public Map<Integer, GbSixDataProcess> getBox() {

@@ -14,7 +14,7 @@ public class DataProcessUtil {
 
     static {
         try {
-            dataProcess.register("com.tiza.sih.rp");
+            dataProcess.register("com.tiza.sih.rp.support.protocol");
         } catch (Exception e) {
             e.printStackTrace();
         }

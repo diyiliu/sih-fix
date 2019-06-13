@@ -57,10 +57,10 @@ public class WorkMapper extends Mapper<LongWritable, Text, WorkKey, WorkValue> {
 
                 int status = Integer.valueOf(location);
                 double speed = Double.valueOf(gpsSpeed);
-                if (status == 1 && speed > 75) {
+                if (status == 1 && speed > 60) {
                     double lng = Double.valueOf(enLng);
                     double lat = Double.valueOf(enLat);
-                    GeoHash geoHash = GeoHash.withCharacterPrecision(lat, lng, 8);
+                    GeoHash geoHash = GeoHash.withCharacterPrecision(lat, lng, 7);
                     String geoStr = geoHash.toBinaryString();
 
                     WGS84Point hashPoint = geoHash.getPoint();
