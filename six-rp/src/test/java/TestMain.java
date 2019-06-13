@@ -1,4 +1,12 @@
+import com.tiza.sih.rp.support.model.GbSixHeader;
+import com.tiza.sih.rp.support.model.IDataProcess;
+import com.tiza.sih.rp.support.task.VehicleInfoTask;
+import com.tiza.sih.rp.support.util.CommonUtil;
+import com.tiza.sih.rp.support.util.DataProcessUtil;
+import com.tiza.sih.rp.support.util.SpringUtil;
 import org.junit.Test;
+
+import java.util.Date;
 
 /**
  * Description: TestMain
@@ -9,6 +17,19 @@ public class TestMain {
 
     @Test
     public void test(){
+        String str = "2323024C57485445535431323334353637383935110101131306030F193B000401010000EB00804C574854455354313233343536373839353630313630332D4532303030303030303030545A5748303030305830303030303030303031303230313032300000000000000000000000000000000000000000000000000000000000203131303030334142423033334646414143443033383943434544313239454400203232303042433033414242303333464641414344453830383943434544314544022621CA98B41B5601631CA8109AAA00172BAA2A2204A25B54000686C1D7020D043F00002AFD2031313030303341424230333346464141434430333839434345443132394544002032323030424330334142423033334646414143444538303839434345443145445F";
+        byte[] bytes = CommonUtil.hexStringToBytes(str);
+        SpringUtil.init();
 
+        System.out.println(VehicleInfoTask.vehicleMap.containsKey("LWHTEST1234567895"));
+//        GbSixHeader header = (GbSixHeader) DataProcessUtil.parseHeader(bytes);
+//        header.setVehicle("007008");
+//        header.setGpsTime(new Date());
+//
+//        int cmd = header.getCmd();
+//        IDataProcess process = DataProcessUtil.getProcess(cmd);
+//        if (process != null) {
+//            process.parse(header.getContent(), header);
+//        }
     }
 }

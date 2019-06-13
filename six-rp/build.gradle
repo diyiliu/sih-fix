@@ -40,7 +40,7 @@ dependencies {
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
     compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
     compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
-    compile group: 'com.google.guava', name: 'guava', version: '23.0'
+    compile group: 'com.google.guava', name: 'guava', version: '20.0'
 
 
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
@@ -53,10 +53,10 @@ tasks.withType(JavaCompile) {
 }
 
 jar {
-    archiveName = 'obd-journey.jar'
+    archiveName = 'sih-rp.jar'
     manifest {
         attributes(
-                'Main-Class': 'com.tiza.Main'
+                'Main-Class': 'com.tiza.sih.rp.Main'
         )
     }
 

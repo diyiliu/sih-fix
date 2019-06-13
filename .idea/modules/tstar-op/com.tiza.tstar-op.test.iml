@@ -22,25 +22,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-mapreduce-client-core-2.5.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-yarn-api-2.5.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hive-metastore-1.2.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hive-exec-1.2.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -58,7 +40,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-hdfs-2.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-yarn-api-2.5.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -67,34 +49,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/tstar-op-1.0.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/jdk.tools-1.7.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/slf4j-api-1.7.7.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-mapreduce-client-jobclient-2.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hive-jdbc-1.2.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -112,25 +67,34 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-yarn-client-2.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-mapreduce-client-jobclient-2.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-mapreduce-client-core-2.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/jline-2.11.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hive-exec-1.2.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-auth-2.5.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -148,15 +112,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-yarn-client-2.5.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hive-service-1.2.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -166,7 +121,52 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hive-jdbc-1.2.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/jdk.tools-1.7.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hive-metastore-1.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/tstar-op-1.0.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-auth-2.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-hdfs-2.5.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/slf4j-api-1.7.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

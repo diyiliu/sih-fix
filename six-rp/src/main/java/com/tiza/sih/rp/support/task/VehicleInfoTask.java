@@ -42,6 +42,7 @@ public class VehicleInfoTask {
             String key = (String) iterator.next();
             vehicleMap.remove(key);
         }
+        vehicleMap.putAll(temp);
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {

@@ -1,7 +1,6 @@
 package com.tiza.sih.rp.support.protocol;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.tiza.sih.rp.support.model.GbSixHeader;
 import com.tiza.sih.rp.support.model.Header;
 import com.tiza.sih.rp.support.model.IDataProcess;
@@ -10,7 +9,7 @@ import com.tiza.sih.rp.support.util.JacksonUtil;
 import com.tiza.sih.rp.support.util.SpringUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import org.apache.commons.collections.MapUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -21,6 +20,8 @@ import java.util.*;
  * Author: DIYILIU
  * Update: 2019-06-06 16:16
  */
+
+@Slf4j
 public class GbSixDataProcess implements IDataProcess {
     protected int cmdId = 0xFF;
 
@@ -101,6 +102,7 @@ public class GbSixDataProcess implements IDataProcess {
         String sql = "REPLACE INTO t_vehicle_info_gbsix(vhcle,update_time" + pStr + ") VALUES(?,?" + vStr +")";
         // 更新当前位置信息
         if (0x02 == cmd) {
+            log.info("更新车辆[{}]实时信息 ... ", vehicle);
             JdbcTemplate jdbcTemplate = SpringUtil.getBean("jdbcTemplate");
             jdbcTemplate.update(sql, list.toArray());
         }
