@@ -41,13 +41,13 @@ public class CMD_02 extends GbSixDataProcess {
             // OBD 信息
             if (0x01 == type) {
                 PackUnit unit = new PackUnit(type);
-                unit.setItemMap(parseOBD(buf));
+                unit.setData(parseOBD(buf));
                 list.add(unit);
             }
             // 数据流信息
             else if (0x02 == type) {
                 PackUnit unit = new PackUnit(type);
-                unit.setItemMap( parseFlow(buf));
+                unit.setData( parseFlow(buf));
                 list.add(unit);
             }
         }
@@ -94,15 +94,15 @@ public class CMD_02 extends GbSixDataProcess {
 
         Map map = Maps.newHashMap();
         map.put("vin", vin);
-        map.put("obd_protocol", protocol);
+        map.put("obdProtocol", protocol);
         map.put("mil", mil);
-        map.put("support_status", CommonUtil.bytes2BinaryStr(supStatus));
-        map.put("ready_status", CommonUtil.bytes2BinaryStr(readyStatus));
-        map.put("soft_id", soft);
+        map.put("supportStatus", CommonUtil.bytes2BinaryStr(supStatus));
+        map.put("readyStatus", CommonUtil.bytes2BinaryStr(readyStatus));
+        map.put("softId", soft);
         map.put("cvn", cvn);
         map.put("iupr", iupr);
         if (CollectionUtils.isNotEmpty(faults)) {
-            map.put("fault_info", faults);
+            map.put("faultInfo", faults);
         }
 
         return map;
@@ -117,7 +117,7 @@ public class CMD_02 extends GbSixDataProcess {
 
         int pressure = buf.readUnsignedByte();
         if (0xFFFF != pressure) {
-            map.put("air_pressure", CommonUtil.keepDecimal(pressure, 0.5, 1));
+            map.put("airPressure", CommonUtil.keepDecimal(pressure, 0.5, 1));
         }
 
         // 扭矩
@@ -131,7 +131,7 @@ public class CMD_02 extends GbSixDataProcess {
         int frictionTq = buf.readUnsignedByte();
         if (0xFF != frictionTq) {
             frictionTq = frictionTq - 125;
-            map.put("friction_torque", frictionTq);
+            map.put("frictionTorque", frictionTq);
         }
 
         // 发动机转速
@@ -143,57 +143,57 @@ public class CMD_02 extends GbSixDataProcess {
         // 燃料流量
         int ff = buf.readUnsignedShort();
         if (0xFFFF != ff) {
-            map.put("fuel_flow", CommonUtil.keepDecimal(ff, 0.05, 2));
+            map.put("fuelFlow", CommonUtil.keepDecimal(ff, 0.05, 2));
         }
 
         int upNox = buf.readUnsignedShort();
         if (0xFFFF != ff) {
-            map.put("up_nox", CommonUtil.keepDecimal(upNox, 0.05, 2));
+            map.put("upNox", CommonUtil.keepDecimal(upNox, 0.05, 2));
         }
 
         int downNox = buf.readUnsignedShort();
         if (0xFFFF != ff) {
-            map.put("down_nox", CommonUtil.keepDecimal(downNox, 0.05, 2));
+            map.put("downNox", CommonUtil.keepDecimal(downNox, 0.05, 2));
         }
 
         // 反应剂余量
         int reactant = buf.readUnsignedByte();
         if (0xFF != reactant) {
-            map.put("reactant_percent", CommonUtil.keepDecimal(reactant, 0.4, 1));
+            map.put("reactantPercent", CommonUtil.keepDecimal(reactant, 0.4, 1));
         }
 
         // 进气量
         int inflow = buf.readUnsignedShort();
         if (0xFFFF != inflow) {
-            map.put("air_inflow", CommonUtil.keepDecimal(inflow, 0.05, 2));
+            map.put("airInflow", CommonUtil.keepDecimal(inflow, 0.05, 2));
         }
 
         int inTemp = buf.readUnsignedShort();
         if (0xFFFF != inTemp) {
-            map.put("in_temp", CommonUtil.keepDecimal(inTemp, 0.03125, 5) - 273);
+            map.put("inTemp", CommonUtil.keepDecimal(inTemp, 0.03125, 5) - 273);
         }
 
         int outTemp = buf.readUnsignedShort();
         if (0xFFFF != outTemp) {
-            map.put("out_temp", CommonUtil.keepDecimal(outTemp, 0.03125, 5) - 273);
+            map.put("outTemp", CommonUtil.keepDecimal(outTemp, 0.03125, 5) - 273);
         }
 
         // DFP 压差
         int dfpDif = buf.readUnsignedShort();
         if (0xFFFF != dfpDif) {
-            map.put("dfp_dif", CommonUtil.keepDecimal(dfpDif, 0.1, 1));
+            map.put("dfpDif", CommonUtil.keepDecimal(dfpDif, 0.1, 1));
         }
 
         // 冷却液温度
         int coolantTemp = buf.readUnsignedByte();
         if (0xFF != coolantTemp) {
-            map.put("coolant_temp", coolantTemp - 40);
+            map.put("coolantTemp", coolantTemp - 40);
         }
 
         // 油位
         int fuelLevel = buf.readUnsignedByte();
         if (0xFF != fuelLevel) {
-            map.put("fuel_level", CommonUtil.keepDecimal(fuelLevel, 0.4, 1));
+            map.put("fuelLevel", CommonUtil.keepDecimal(fuelLevel, 0.4, 1));
         }
 
         // 定位状态

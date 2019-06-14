@@ -92,12 +92,12 @@ public class GbSixDataProcess implements IDataProcess {
                     continue;
                 }
                 keys.add(id);
-                Map<String, Object> map = unit.getItemMap();
-                for (Iterator iterator = map.keySet().iterator(); iterator.hasNext(); ) {
-                    String key = (String) iterator.next();
+                Map<String, Object> map = unit.getData();
+                for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext(); ) {
+                    String key = iterator.next();
                     Object value = map.get(key);
 
-                    pStr.append(",").append(key);
+                    pStr.append(",").append(CommonUtil.underline(key));
                     vStr.append(",?");
                     list.add(formatValue(value));
                 }

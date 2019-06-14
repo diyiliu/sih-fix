@@ -19,5 +19,5 @@ public class PackUnit {
 
     private int id;
 
-    private Map<String, Object> itemMap;
+    private Map<String, Object> data;
 }
