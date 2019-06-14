@@ -1,6 +1,5 @@
 import com.tiza.sih.rp.support.model.GbSixHeader;
 import com.tiza.sih.rp.support.model.IDataProcess;
-import com.tiza.sih.rp.support.task.VehicleInfoTask;
 import com.tiza.sih.rp.support.util.CommonUtil;
 import com.tiza.sih.rp.support.util.DataProcessUtil;
 import com.tiza.sih.rp.support.util.SpringUtil;
@@ -21,15 +20,14 @@ public class TestMain {
         byte[] bytes = CommonUtil.hexStringToBytes(str);
         SpringUtil.init();
 
-        System.out.println(VehicleInfoTask.vehicleMap.containsKey("LWHTEST1234567895"));
-//        GbSixHeader header = (GbSixHeader) DataProcessUtil.parseHeader(bytes);
-//        header.setVehicle("007008");
-//        header.setGpsTime(new Date());
-//
-//        int cmd = header.getCmd();
-//        IDataProcess process = DataProcessUtil.getProcess(cmd);
-//        if (process != null) {
-//            process.parse(header.getContent(), header);
-//        }
+        GbSixHeader header = (GbSixHeader) DataProcessUtil.parseHeader(bytes);
+        header.setVehicle("007009");
+        header.setGpsTime(new Date());
+
+        int cmd = header.getCmd();
+        IDataProcess process = DataProcessUtil.getProcess(cmd);
+        if (process != null) {
+            process.parse(header.getContent(), header);
+        }
     }
 }

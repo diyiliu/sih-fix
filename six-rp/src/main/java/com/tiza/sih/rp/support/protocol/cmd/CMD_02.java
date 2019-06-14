@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tiza.sih.rp.support.model.GbSixHeader;
 import com.tiza.sih.rp.support.model.Header;
+import com.tiza.sih.rp.support.model.PackUnit;
 import com.tiza.sih.rp.support.protocol.GbSixDataProcess;
 import com.tiza.sih.rp.support.util.CommonUtil;
 import com.tiza.sih.rp.support.util.GpsCorrectUtil;
@@ -33,26 +34,28 @@ public class CMD_02 extends GbSixDataProcess {
         // 解析时间
         fetchDate(sixHeader, buf);
 
-        List list = new ArrayList();
+        List<PackUnit> list = new ArrayList();
         while (buf.readableBytes() > 1) {
             int type = buf.readUnsignedByte();
 
             // OBD 信息
             if (0x01 == type) {
-
-                parseOBD(buf, list);
+                PackUnit unit = new PackUnit(type);
+                unit.setItemMap(parseOBD(buf));
+                list.add(unit);
             }
             // 数据流信息
             else if (0x02 == type) {
-
-                parseFlow(buf, list);
+                PackUnit unit = new PackUnit(type);
+                unit.setItemMap( parseFlow(buf));
+                list.add(unit);
             }
         }
 
         detach(sixHeader, list);
     }
 
-    private void parseOBD(ByteBuf buf, List paramValues) {
+    private Map parseOBD(ByteBuf buf) {
         int protocol = buf.readUnsignedByte();
         int mil = buf.readUnsignedByte();
 
@@ -79,7 +82,6 @@ public class CMD_02 extends GbSixDataProcess {
         buf.readBytes(iuprBytes);
         String iupr = new String(iuprBytes);
 
-
         // 故障信息
         List faults = Lists.newArrayList();
         int faultNum = buf.readUnsignedByte();
@@ -91,7 +93,6 @@ public class CMD_02 extends GbSixDataProcess {
         }
 
         Map map = Maps.newHashMap();
-        paramValues.add(map);
         map.put("vin", vin);
         map.put("obd_protocol", protocol);
         map.put("mil", mil);
@@ -100,15 +101,15 @@ public class CMD_02 extends GbSixDataProcess {
         map.put("soft_id", soft);
         map.put("cvn", cvn);
         map.put("iupr", iupr);
-        if (CollectionUtils.isNotEmpty(faults)){
+        if (CollectionUtils.isNotEmpty(faults)) {
             map.put("fault_info", faults);
         }
+
+        return map;
     }
 
-    private void parseFlow(ByteBuf buf, List paramValues) {
+    private Map<String, Object> parseFlow(ByteBuf buf) {
         Map map = Maps.newHashMap();
-        paramValues.add(map);
-
         int speed = buf.readUnsignedShort();
         if (0xFFFF != speed) {
             map.put("speed", CommonUtil.keepDecimal(speed, 1 / 256, 3));
@@ -220,5 +221,7 @@ public class CMD_02 extends GbSixDataProcess {
         if (0xFFFFFFFF != mileage) {
             map.put("mileage", CommonUtil.keepDecimal(mileage, 0.1, 1));
         }
+
+        return map;
     }
 }

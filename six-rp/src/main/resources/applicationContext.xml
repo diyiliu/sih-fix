@@ -11,7 +11,7 @@
     <!-- 开启注解扫描 -->
     <context:component-scan base-package="com.tiza.sih.rp"/>
     <!-- 加载配置文件 -->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:sih.properties,classpath:jdbc.properties"/>
     <!-- 容器管理 -->
     <bean class="com.tiza.sih.rp.support.util.SpringUtil"/>
 
@@ -39,6 +39,9 @@
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <bean class="com.tiza.sih.rp.support.util.KafkaUtil" p:brokers="${kafka.brokers}" p:topic="${kafka.work-topic}"
+          p:serializer="kafka.serializer.DefaultEncoder" init-method="init"/>
 
     <!-- 车辆信息定时器 -->
     <bean id="vehicleInfoTask" class="com.tiza.sih.rp.support.task.VehicleInfoTask" init-method="execute" p:jdbcTemplate-ref="jdbcTemplate"/>

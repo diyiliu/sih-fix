@@ -7,9 +7,7 @@ import backtype.storm.spout.SchemeAsMultiScheme;
 import backtype.storm.topology.TopologyBuilder;
 import com.tiza.sih.rp.module.ParseHandler;
 import com.tiza.sih.rp.support.util.JacksonUtil;
-import com.tiza.sih.rp.support.util.SpringUtil;
 import org.apache.commons.cli.*;
-import org.springframework.jdbc.core.JdbcTemplate;
 import storm.kafka.KafkaSpout;
 import storm.kafka.SpoutConfig;
 import storm.kafka.StringScheme;
@@ -38,10 +36,10 @@ public class Main {
         Properties properties = new Properties();
         try (InputStream in = ClassLoader.getSystemResourceAsStream("sih.properties")) {
             properties.load(in);
-            String topic = properties.getProperty("kafka.topic");
+            String topic = properties.getProperty("kafka.raw-topic");
             ZkHosts zkHosts = new ZkHosts(properties.getProperty("kafka.zk-host"));
 
-            SpoutConfig spoutConfig = new SpoutConfig(zkHosts, topic, "", "sih_sixRp");
+            SpoutConfig spoutConfig = new SpoutConfig(zkHosts, topic, "", "sih_gb6");
             spoutConfig.scheme = new SchemeAsMultiScheme(new StringScheme());
 
             TopologyBuilder builder = new TopologyBuilder();
@@ -57,9 +55,9 @@ public class Main {
             // 本地模式 + 集群模式
             if (cli.getOptionValue("local").equals("1")) {
                 LocalCluster localCluster = new LocalCluster();
-                localCluster.submitTopology("sih_sixRp", conf, builder.createTopology());
+                localCluster.submitTopology("sih_gb6", conf, builder.createTopology());
             } else {
-                StormSubmitter.submitTopology("sih_sixRp", conf, builder.createTopology());
+                StormSubmitter.submitTopology("sih_gb6", conf, builder.createTopology());
             }
         }
     }

@@ -1,6 +1,7 @@
 import com.tiza.sih.rp.support.model.IDataProcess;
 import com.tiza.sih.rp.support.util.CommonUtil;
 import com.tiza.sih.rp.support.util.DataProcessUtil;
+import kafka.serializer.DefaultEncoder;
 import org.junit.Test;
 
 /**
@@ -12,8 +13,10 @@ public class TestParse {
 
     @Test
     public void test() throws Exception{
-        IDataProcess process = DataProcessUtil.getProcess(0x01);
-        System.out.println(process);
+//        IDataProcess process = DataProcessUtil.getProcess(0x01);
+//        System.out.println(process);
+
+        System.out.println(DefaultEncoder.class.getName());
     }
 
     @Test
