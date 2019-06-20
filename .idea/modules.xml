@@ -5,6 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/location/com.tiza.location.iml" filepath="$PROJECT_DIR$/.idea/modules/location/com.tiza.location.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/location/com.tiza.location.main.iml" filepath="$PROJECT_DIR$/.idea/modules/location/com.tiza.location.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/location/com.tiza.location.test.iml" filepath="$PROJECT_DIR$/.idea/modules/location/com.tiza.location.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mstar-jh/com.tiza.mstar-jh.iml" filepath="$PROJECT_DIR$/.idea/modules/mstar-jh/com.tiza.mstar-jh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mstar-jh/com.tiza.mstar-jh.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mstar-jh/com.tiza.mstar-jh.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mstar-jh/com.tiza.mstar-jh.test.iml" filepath="$PROJECT_DIR$/.idea/modules/mstar-jh/com.tiza.mstar-jh.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.iml" filepath="$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.main.iml" filepath="$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.test.iml" filepath="$PROJECT_DIR$/.idea/modules/report-temp/com.tiza.report-temp.test.iml" />
@@ -17,6 +20,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/-1733929987/com.tiza.tstar-plugin.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mstar-jh.iml" filepath="$PROJECT_DIR$/.idea/modules/mstar-jh.iml" />
       <module fileurl="file://$PROJECT_DIR$/sih-fix.iml" filepath="$PROJECT_DIR$/sih-fix.iml" />
     </modules>
   </component>

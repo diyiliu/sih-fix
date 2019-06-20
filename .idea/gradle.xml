@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/location" />
+            <option value="$PROJECT_DIR$/mstar-jh" />
             <option value="$PROJECT_DIR$/report-temp" />
             <option value="$PROJECT_DIR$/six-rp" />
             <option value="$PROJECT_DIR$/tstar-op" />

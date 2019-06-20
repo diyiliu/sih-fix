@@ -4,4 +4,5 @@ include 'location'
 include 'report-temp'
 include 'tstar-op'
 include 'six-rp'
+include 'mstar-jh'
 

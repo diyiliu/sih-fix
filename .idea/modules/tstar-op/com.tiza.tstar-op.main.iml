@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id=":tstar-op:main" external.linked.project.path="$MODULE_DIR$/../../../tstar-op" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="com.tiza" external.system.module.type="sourceSet" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+  <component name="ExternalSystem" linkedProjectPath="$MODULE_DIR$/../../../../../Tiza/hw-trash" rootProjectPath="$MODULE_DIR$/../../../../../Tiza/hw-trash" />
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
     <output url="file://$MODULE_DIR$/../../../tstar-op/out/production/classes" />
     <exclude-output />
@@ -48,7 +49,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/jline-2.11.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-yarn-client-2.5.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -66,7 +67,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-yarn-client-2.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/jline-2.11.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -84,7 +85,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-mapreduce-client-common-2.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-mapreduce-client-jobclient-2.5.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -147,7 +148,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-mapreduce-client-jobclient-2.5.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../tstar-plugin/libs/tstar-op/lib/hadoop-mapreduce-client-common-2.5.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
