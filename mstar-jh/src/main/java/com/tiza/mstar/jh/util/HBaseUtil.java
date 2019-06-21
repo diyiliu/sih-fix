@@ -55,9 +55,14 @@ public class HBaseUtil {
                             String value = new String(valArr);
 
                             Map map = JacksonUtil.toObject(value, HashMap.class);
-                            if (map.containsKey("can")){
+                            if (map.containsKey("can")) {
                                 String canJson = JacksonUtil.toJson(map.get("can"));
                                 CanBody canBody = JacksonUtil.toObject(canJson, CanBody.class);
+                                if (canBody.getMileage() == null || canBody.getOil() == null ||
+                                        canBody.getPump() == null || canBody.getPumpTime() == null) {
+
+                                    continue;
+                                }
                                 canBody.setId(id);
                                 canBody.setTime(time);
                                 list.add(canBody);
